@@ -1,0 +1,28 @@
+ ____________________________
+|                            |
+|  ************************  |
+|  *                      *  |
+|  *         vLib         *  |
+|  *                      *  |
+|  ************************  |
+|____________________________|
+
+
+ __________________________
+|                          |
+|          ABOUT           |
+|__________________________|
+
+vLib is a collection of libraries,
+all beginning with a lowercase v.
+
+
+ __________________________
+|                          |
+|        LIBRARIES         |
+|__________________________|
+
+This is a list of all the libraries in vLib.
+
+vGFX	- Graphics library
+vMIDI	- MIDI library

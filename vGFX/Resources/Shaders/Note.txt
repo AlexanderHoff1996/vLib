@@ -1,0 +1,1 @@
+Use .vs for vertex shaders, and .fs for fragment shaders.

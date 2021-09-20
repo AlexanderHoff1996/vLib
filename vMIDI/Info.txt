@@ -1,0 +1,278 @@
+ _____________________________
+|                             |
+|  *************************  |
+|  *                       *  |
+|  *         vMIDI         *  |
+|  *                       *  |
+|  *************************  |
+|_____________________________|
+
+
+ __________________________
+|                          |
+|          ABOUT           |
+|__________________________|
+
+vMIDI is a MIDI parsing library.
+
+It's object-oriented, using modern C++(17),
+and is very simple and easy to use.
+
+
+ __________________________
+|                          |
+|         FEATURES         |
+|__________________________|
+
+* Load a midi file
+* Read everything from the file
+    * All tracks
+    * All messages and events
+
+
+ __________________________
+|                          |
+|      DOCUMENTATION       |
+|__________________________|
+
+-----------------------
+-       Classes       -
+-----------------------
+
+* MidiFile
+    * open()			- open a midi file (stream)
+    * close()			- close the midi file (stream)
+    * getFormat()		- get the format of the midi file (0, 1 or 2)
+    * getNumTracks()		- get the number of tracks in the midi file
+    * getTrack()		- pointer to a specified track in the midi file
+
+* MidiTrack
+    * getNumEvents()		- get the number of events in the track
+    * getMidiEvent()		- pointer to a specified event in the track
+
+* MidiEvent
+    * getType			- the type of event
+    * getTimestamp()		- the timestamp of the event
+    * getDeltaTime()		- the delta time (time since last event, or 0 if at beginning)
+    * getChannel()		- the midi channel the event is on
+    * getNote()			- the note/key (C, C#, D, etc) of the note on/off or polyphonic pressure events
+    * getVelocity()		- the velocity of the note on/off events
+    * getPressure()		- the pressure of the polyphonic pressure and channel pressure events
+    * getController()		- controller
+    * getControllerValue()	- controller value
+    * getProgram()		- program change event
+    * getPitchBend()		- pitch bend event
+
+    * getSequenceNumber()
+    * getText()
+    * getCopyright()
+    * getTrackName()
+    * getInstrumentName()
+    * getDeviceName()
+    * getEndOfTrack()
+    * getSMPTEOffset()
+
+    * getLyric()
+    * getMarker()
+    * getCuePoint()
+    * getProgramName()
+    * getMidiChannelPrefix()
+    * getMidiPort()
+    * getTempo()
+    * getTimeSignature()
+    * getKeySignature()
+    * getSequencerSpecificEvent()
+
+
+-----------------------
+-     Data types      -
+-----------------------
+
+* uint8_t	8 bit		1 byte/character	0 - FF
+* uint16_t	16 bit		2 bytes/characters	0 - FF FF
+* uint32_t	32 bit		4 bytes/characters	0 - FF FF FF FF
+* uint64_t	64 bit		8 bytes/characters	0 - FF FF FF FF FF FF FF FF
+
+
+-----------------------
+-      Structure      -
+-----------------------
+
+A MidiFile object contains a number of MidiTrack objects.
+Each MidiTrack object contains a number of MidiEvent objects.
+MidiTrack and MidiEvent objects are created dynamically and use pointers.
+
+MidiFile -> MidiTrack -> MidiEvent
+                      -> MetaEvent
+                      -> SysExEvent
+
+MidiFile
+	MidiTrack0
+		MidiEvent0
+		MidiEvent1
+		MidiEvent2
+	
+	MidiTrack1
+		MidiEvent0
+		MidiEvent1
+		MidiEvent2
+	
+	MidiTrack2
+		MidiEvent0
+		MidiEvent1
+		MidiEvent2
+
+midiFileObject
+	.getFormat()
+	.getNumTracks()
+
+	.getMidiTrack(0)
+		->getNumEvents()
+
+		->getEvent(0)
+			->getType()
+			->getTimestamp()
+			->getDeltaTime()
+		
+		->getEvent(1)
+			->getType()
+			->getTimestamp()
+			->getDeltaTime()
+
+		->getEvent(2)
+			->getType()
+			->getTimestamp()
+			->getDeltaTime()
+
+	.getMidiTrack(1)
+		->getNumEvents()
+
+		->getEvent(0)
+			->getType()
+			->getTimestamp()
+			->getVelocity()
+
+		->getEvent(1)
+			->getType()
+			->getTimestamp()
+			->getVelocity()
+
+		->getEvent(2)
+			->getType()
+			->getTimestamp()
+			->getVelocity()
+
+Example:
+
+MidiFile midi {"midifile.mid"};			// Create a MidiFile object and load a midi file
+
+MidiFile midi2;					// Create a MidiFile object without loading a midi file
+file2.loadMidiFile("midifile2.mid");		// Load a midi file to the midi2 object
+
+cout << midi.getNumTracks();			// Print the number of tracks in "midifile.mid"
+
+midi.getTrack(0)->getName();			// Get the name of the first track in "midifile.mid"
+midi.getTrack(4)->getNumEvents();		// Get the number of midi events in track 5 in "midifile.mid"
+midi.getTrack(6)->getEvent(55)->getType();	// Get the type of midi event 56 in track 7 in "midifile.mid"
+
+
+ ________________________________
+|                                |
+|    MIDI FILE TECHNICALITIES    |
+|________________________________|
+
+* Midi files consist of a bunch of chunks
+* Every chunk (header or track) begins with an 8 byte header
+  * Bytes 0 - 3:	The identifier (MThd or MTrk)
+  * Bytes 4 - 7:	The length of the following data (chunk - header(8 bytes))
+
+
+-----------------------
+-    Header chunk     -
+-----------------------
+
+* The first chunk is the header (MThd)
+* There can only be one header chunk, and it must be first
+* The header chunk is a fixed length of 14 bytes total
+  * Bytes 0 - 3:	MThd (hex: 4D 54 68 64)
+  * Bytes 4 - 7:	Length of following chunk data (6 bytes: 00 00 00 06, might change in the future)
+  * Bytes 8 - 9:	Format (00 00, 00 01, or 00 02)
+  * Bytes 10 - 11:	Number of tracks in the file
+  * Bytes 12 - 13:	Timing data, either in timecode (Hrs.Mins.Secs.Frames) or metrical (Bar.Beat)
+    
+Example:
+    
+4D 54 68 64	MThd
+00 00 00 06	6 bytes of data follow
+00 01		Format 1
+00 04		4 tracks
+00 60		Timing (96 ppqn, metrical time)
+
+
+-----------------------
+-     Track chunk     -
+-----------------------
+
+* There can be one or more track chunks (MTrk)
+  * Format 0: One track chunk
+  * Format 1: One or more track chunks that can play simultaneously
+    * The first track is a tempo track and should only contain tempo related meta events
+  * Format 2: One or more track chunks that should play independently
+* Track chunks begin with an 8 byte header (see above)
+* The actual data of a track chunk looks like this:
+  * The first part is the time since the last midi event (the "delta-time")
+    * This is a variable length of 1 - 4 bytes
+  * The second part describes the event and is 2 or more bytes
+    * The type of the event can be "midi", "meta" or "sysex"
+
+Example:
+
+4D 54 72 6B	MTrk
+00 00 01 40	320 bytes of data follow (140 in hex)
+00		First event or beginning of track
+FF		FF means it's a meta event
+03		Type of meta event, 03 is the name of the sequence or track
+09		Length of the following data (the text)
+74 65 73 74	"test"
+20 6D 69 64	" mid"
+69		"i"
+00		Time of event (beginning)
+FF		Another meta event
+58 04		Time Signature
+04		Numerator of the time signature (4)
+02		Denominator of the time signature (2, 2 is quarter-note, 3 is eighth-note, etc)
+18		Number of midi clocks between metronome clicks (24 in decimal)
+08		Number of notated 32nd-notes in a midi quarter-note (this is usually 8)
+00		Time of event (beginning)
+90		Note On event on channel 0
+3C		Middle C
+46		Velocity (0 - 127), 46 is 70 in decimal, 0 is a Note Off
+83 60		New event, this is the time since the previous event (33632 in decimal)
+80 3C 40	Note Off on Middle C, channel 0, with the velocity 40 
+                (Looking online it seems that the velocity is used to check how quickly you release the key)
+
+The next midi note event just follows the same pattern of
+delta-time, note on and channel, key, velocity, delta-time, note off and channel, key, velocity.
+
+Unless of course there are multiple midi notes being played simultaneously.
+
+
+ __________________________
+|                          |
+|         TODO LIST        |
+|__________________________|
+
+(-) Nothing done yet
+(*) WIP (little done)
+(**) WIP (quite a bit done)
+(***) WIP (mostly done)
+(X) Done
+
+
+-----------------------------
+-       Version 0.1.0       -
+-----------------------------
+
+(The very first version of vMIDI.)
+
+Done!
