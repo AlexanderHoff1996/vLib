@@ -75,7 +75,7 @@ private:
 	void free();
 
 	void setVertexData();
-	void setupMatrices();
+	void setMatrices();
 	void setBuffers();
 	void setAttributes();
 

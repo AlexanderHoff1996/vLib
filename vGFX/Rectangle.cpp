@@ -7,7 +7,7 @@ vGFX::Rectangle::Rectangle()
 	shader.use();
 
 	setVertexData();
-	setupMatrices();
+	setMatrices();
 	setBuffers();
 	setAttributes();
 }
@@ -26,7 +26,7 @@ vGFX::Rectangle::Rectangle(GLfloat xPos, GLfloat yPos, GLfloat w, GLfloat h,
 	shader.use();
 
 	setVertexData();
-	setupMatrices();
+	setMatrices();
 	setBuffers();
 	setAttributes();
 }
@@ -48,7 +48,7 @@ vGFX::Rectangle::Rectangle(GLfloat xPos, GLfloat yPos, GLfloat w, GLfloat h,
 	shader.use();
 
 	setVertexData();
-	setupMatrices();
+	setMatrices();
 	setBuffers();
 	setAttributes();
 }
@@ -70,7 +70,7 @@ vGFX::Rectangle::Rectangle(GLfloat xPos, GLfloat yPos, GLfloat w, GLfloat h,
 	shader.use();
 
 	setVertexData();
-	setupMatrices();
+	setMatrices();
 	setBuffers();
 	setAttributes();
 }
@@ -85,6 +85,8 @@ vGFX::Rectangle::~Rectangle()
 void vGFX::Rectangle::render()
 {
 	shader.use();
+	setMatrices();
+
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
@@ -115,7 +117,7 @@ void vGFX::Rectangle::setVertexData()
 }
 
 //=============================================================================
-void vGFX::Rectangle::setupMatrices()
+void vGFX::Rectangle::setMatrices()
 {
 	glm::mat4 projection = glm::mat4(1.0f);
 	glm::mat4 model = glm::mat4(1.0f);

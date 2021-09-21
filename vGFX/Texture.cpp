@@ -7,7 +7,7 @@ vGFX::Texture::Texture()
 	shader.use();
 
 	setVertexData();
-	setupMatrices();
+	setMatrices();
 	setBuffers();
 	setAttributes();
 }
@@ -34,7 +34,7 @@ void vGFX::Texture::createTexture(GLfloat xPos, GLfloat yPos, GLfloat w, GLfloat
 	shader.use();
 
 	setVertexData();
-	setupMatrices();
+	setMatrices();
 	setBuffers();
 	setAttributes();
 
@@ -52,9 +52,10 @@ void vGFX::Texture::createTexture(GLfloat xPos, GLfloat yPos, GLfloat w, GLfloat
 //=============================================================================
 void vGFX::Texture::render()
 {
-	glBindTexture(GL_TEXTURE_2D, texture);
-
 	shader.use();
+	setMatrices();
+
+	glBindTexture(GL_TEXTURE_2D, texture);
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
@@ -81,7 +82,7 @@ void vGFX::Texture::setVertexData()
 }
 
 //=============================================================================
-void vGFX::Texture::setupMatrices()
+void vGFX::Texture::setMatrices()
 {
 	glm::mat4 projection = glm::mat4(1.0f);
 	glm::mat4 model = glm::mat4(1.0f);
