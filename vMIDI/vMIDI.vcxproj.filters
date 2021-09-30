@@ -13,33 +13,69 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\API">
+      <UniqueIdentifier>{99417aaa-e5f5-44f8-9956-df68e4b09589}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Read Data">
+      <UniqueIdentifier>{c7cfd004-a7e4-4cf7-831b-d9155ed0824e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\API">
+      <UniqueIdentifier>{ac8548cd-9579-4c5c-ab05-7a0fd2555cc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Read Data">
+      <UniqueIdentifier>{07f904fb-afca-487a-a07c-0ed0ef72de5d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MidiFile.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\API</Filter>
     </ClInclude>
     <ClInclude Include="MidiTrack.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="MidiEvent.h">
+      <Filter>Header Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Data.h">
+      <Filter>Header Files\Read Data</Filter>
+    </ClInclude>
+    <ClInclude Include="File.h">
+      <Filter>Header Files\Read Data</Filter>
     </ClInclude>
     <ClInclude Include="SharedData.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Read Data</Filter>
+    </ClInclude>
+    <ClInclude Include="TempoTrack.h">
+      <Filter>Header Files\Read Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Types.h">
+      <Filter>Header Files\Read Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Notes.h">
+      <Filter>Header Files\Read Data</Filter>
+    </ClInclude>
+    <ClInclude Include="TempoChange.h">
+      <Filter>Header Files\Read Data</Filter>
     </ClInclude>
     <ClInclude Include="vMIDI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MidiEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="MidiFile.cpp">
+      <Filter>Source Files\API</Filter>
+    </ClCompile>
     <ClCompile Include="MidiTrack.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\API</Filter>
     </ClCompile>
     <ClCompile Include="MidiEvent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\API</Filter>
     </ClCompile>
-    <ClCompile Include="MidiFile.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Data.cpp">
+      <Filter>Source Files\Read Data</Filter>
+    </ClCompile>
+    <ClCompile Include="File.cpp">
+      <Filter>Source Files\Read Data</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

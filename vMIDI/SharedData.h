@@ -1,64 +1,45 @@
 #pragma once
 
+#include <cstdint>
 #include <string>
 
-namespace vmidi {   // Beginning of vmidi namespace
 //=============================================================================
+namespace vMIDI {
+//  _________________
+// | NAMESPACE BEGIN |
+//  *****************
 
+//=============================================================================
 class SharedData
 {
 public:
-	static void			setFormat(uint16_t midiFormat)		{format = midiFormat;}
-	static uint16_t		getFormat()							{return format;}
+	static uint16_t		getFormat()			{return format;}
+	static uint16_t		getNumberOfTracks()	{return numberOfTracks;}
+	static uint16_t		getTiming()			{return timing;}
+	static std::string	getTimingType()		{return timingType;}
+	static std::string	getSequenceName()	{return sequenceName;}
+	static std::string	getCopyright()		{return copyright;}
+	static std::string	getDeviceName()		{return deviceName;}
 
-	static void			setNumOfTracks(uint16_t nOfTracks)	{numOfTracks = nOfTracks;}
-	static uint16_t		getNumOfTracks()					{return numOfTracks;}
-
-	static void			setDivision(uint16_t midiDivision)	{division = midiDivision;}
-	static uint16_t		getDivision()						{return division;}
-
-	static void			setTiming(std::string midiTiming)	{timing = midiTiming;}
-	static std::string	getTiming()							{return timing;}
-
-	static void			setCurrentTempo(float currTempo)	{currentTempo = currTempo;}
-	static float		getCurrentTempo()					{return currentTempo;}
-
-	static void			setCurrentTime(float currTime)		{currentTime = currTime;}
-	static void			addToCurrentTime(float currTime)	{currentTime += currTime;}
-	static float		getCurrentTime()					{return currentTime;}
-
-	static void			setTrackNumber(int n)				{trackNumber = n;}
-	static int			getTrackNumber()					{return trackNumber;}
-
-	static void			setRunningStatus(int status)		{runningStatus = status;}
-	static uint8_t		getRunningStatus()					{return runningStatus;}
-
-	static void			setSequenceName(std::string name)	{sequenceName = name;}
-	static std::string	getSequenceName()					{return sequenceName;}
-
-	static void			setCopyright(std::string copyr)		{copyright = copyr;}
-	static std::string	getCopyright()						{return copyright;}
-
-	static void			setDeviceName(std::string name)		{deviceName = name;}
-	static std::string	getDeviceName()						{return deviceName;}
+	static void setFormat			(uint16_t frmt)			{format = frmt;}
+	static void setNumberOfTracks	(uint16_t ntrks)		{numberOfTracks = ntrks;}
+	static void setTiming			(uint16_t timng)		{timing = timng;}
+	static void setTimingType		(std::string timngType)	{timingType = timngType;}
+	static void setSequenceName		(std::string seqName)	{sequenceName = seqName;}
+	static void setCopyright		(std::string copyrght)	{copyright = copyrght;}
+	static void setDeviceName		(std::string devName)	{deviceName = devName;}
 
 private:
-	inline static uint16_t		format			{0};
-	inline static uint16_t		numOfTracks		{0};
-	inline static uint16_t		division		{0};
-	inline static std::string	timing;
-
-	inline static float			currentTempo	{0.f};
-	inline static float			currentTime		{0.f};
-
-	inline static int			trackNumber		{0};
-	
-	inline static uint8_t		runningStatus	{0};
-	
-	inline static std::string	sequenceName;
-	inline static std::string	copyright;
-	inline static std::string	deviceName;
+	static inline uint16_t		format			{0};
+	static inline uint16_t		numberOfTracks	{0};
+	static inline uint16_t		timing			{0};
+	static inline std::string	timingType;
+	static inline std::string	sequenceName;
+	static inline std::string	copyright;
+	static inline std::string	deviceName;
 };
 
-//=============================================================================
-}   // End of vmidi namespace
+//  _______________
+// | NAMESPACE END |
+//  ***************
+}

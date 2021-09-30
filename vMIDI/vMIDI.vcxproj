@@ -141,16 +141,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="File.h" />
+    <ClInclude Include="Notes.h" />
+    <ClInclude Include="SharedData.h" />
     <ClInclude Include="MidiEvent.h" />
     <ClInclude Include="MidiFile.h" />
     <ClInclude Include="MidiTrack.h" />
-    <ClInclude Include="SharedData.h" />
+    <ClInclude Include="Data.h" />
+    <ClInclude Include="TempoTrack.h" />
+    <ClInclude Include="TempoChange.h" />
+    <ClInclude Include="Types.h" />
     <ClInclude Include="vMIDI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="File.cpp" />
     <ClCompile Include="MidiEvent.cpp" />
     <ClCompile Include="MidiFile.cpp" />
     <ClCompile Include="MidiTrack.cpp" />
+    <ClCompile Include="Data.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
